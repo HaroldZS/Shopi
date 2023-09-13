@@ -5,6 +5,7 @@ export const ShopiCartContext = createContext();
 export const ShopiCartProvider = ({ children }) => {
   const [count, setCount] = useState(0);
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  const [productToShow, setProductToShow] = useState({});
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
@@ -17,6 +18,8 @@ export const ShopiCartProvider = ({ children }) => {
         isProductDetailOpen,
         openProductDetail,
         closeProductDetail,
+        productToShow,
+        setProductToShow,
       }}
     >
       {children}

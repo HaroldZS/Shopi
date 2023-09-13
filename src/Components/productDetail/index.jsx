@@ -3,8 +3,10 @@ import { useContext } from "react";
 import { ShopiCartContext } from "../../Context";
 
 const ProductDetail = () => {
-  const { isProductDetailOpen, closeProductDetail } =
+  const { isProductDetailOpen, closeProductDetail, productToShow } =
     useContext(ShopiCartContext);
+
+  console.log(productToShow);
 
   return (
     <aside
@@ -17,10 +19,24 @@ const ProductDetail = () => {
         <div>
           <XMarkIcon
             className="h-6 w-6 text-black cursor-pointer"
-            onClick={closeProductDetail}
+            onClick={() => closeProductDetail()}
           ></XMarkIcon>
         </div>
       </div>
+      <figure className="px-6">
+        <img
+          src={productToShow.images[0]}
+          alt={productToShow.title}
+          className="w-full h-full rounded-lg"
+        />
+      </figure>
+      <p className="flex flex-col p-6">
+        <span className="font-medium text-2xl mb-2">
+          ${productToShow.price}
+        </span>
+        <span className="font-medium text-md">${productToShow.title}</span>
+        <span className="font-light text-sm">${productToShow.description}</span>
+      </p>
     </aside>
   );
 };
