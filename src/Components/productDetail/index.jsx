@@ -6,8 +6,6 @@ const ProductDetail = () => {
   const { isProductDetailOpen, closeProductDetail, productToShow } =
     useContext(ShopiCartContext);
 
-  console.log(productToShow);
-
   return (
     <aside
       className={`${
