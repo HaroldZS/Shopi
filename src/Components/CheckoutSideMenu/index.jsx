@@ -4,8 +4,17 @@ import { ShopiCartContext } from "../../Context";
 import OrderCard from "../OrderCard";
 
 const CheckOutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts } =
-    useContext(ShopiCartContext);
+  const {
+    isCheckoutSideMenuOpen,
+    closeCheckoutSideMenu,
+    cartProducts,
+    setCartProducts,
+  } = useContext(ShopiCartContext);
+
+  const handleDelete = (id) => {
+    const filteredProducts = cartProducts.filter((product) => product.id != id);
+    setCartProducts(filteredProducts);
+  };
 
   return (
     <aside
@@ -24,7 +33,11 @@ const CheckOutSideMenu = () => {
       </div>
       <div className="px-6 overflow-y-scroll">
         {cartProducts.map((product) => (
-          <OrderCard key={product.id} product={product} />
+          <OrderCard
+            key={product.id}
+            product={product}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </aside>
