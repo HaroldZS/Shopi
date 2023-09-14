@@ -1,9 +1,10 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
 import { ShopiCartContext } from "../../Context";
+import OrderCard from "../OrderCard";
 
 const CheckOutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu } =
+  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts } =
     useContext(ShopiCartContext);
 
   return (
@@ -20,6 +21,11 @@ const CheckOutSideMenu = () => {
             onClick={() => closeCheckoutSideMenu()}
           ></XMarkIcon>
         </div>
+      </div>
+      <div className="px-6">
+        {cartProducts.map((product) => (
+          <OrderCard key={product.id} product={product} />
+        ))}
       </div>
     </aside>
   );
