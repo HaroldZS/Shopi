@@ -25,7 +25,7 @@ const ProductDetail = () => {
       </div>
       <figure className="px-6">
         <img
-          src={productToShow.images[0]}
+          src={productToShow.images}
           alt={productToShow.title}
           className="w-full h-full rounded-lg"
         />
