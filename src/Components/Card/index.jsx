@@ -41,7 +41,7 @@ const Card = ({ data }) => {
       return (
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(event) => addProductToCart(event, data)}
+          onClick={(event) => addProductToCart(event, { ...data, quantity: 1 })}
         >
           <PlusIcon className="h-6 w-6 text-black"></PlusIcon>
         </div>

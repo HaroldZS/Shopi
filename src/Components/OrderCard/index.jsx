@@ -1,24 +1,36 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { ShopiCartContext } from "../../Context";
 
 const OrderCard = ({ product, handleDelete }) => {
-  const { id, title, images, price } = product;
-  const [quantity, setQuantity] = useState(1);
-  const [calculatedPrice, setCalculatedPrice] = useState(price);
+  const { id, title, images, price, quantity } = product;
+  const { cartProducts, setCartProducts } = useContext(ShopiCartContext);
 
-  useEffect(() => {
-    setCalculatedPrice(quantity * price);
-  }, [quantity]);
+  const addItem = (id) => {
+    const updatedCartProducts = cartProducts.map((product) => {
+      if (product.id === id) {
+        return { ...product, quantity: product.quantity + 1 };
+      }
+      return product;
+    });
 
-  const addItem = () => {
-    setQuantity(quantity + 1);
+    handleDelete(id);
+    setCartProducts(updatedCartProducts);
   };
 
   const removeItem = (id) => {
     if (quantity === 1) {
       handleDelete(id);
     } else {
-      setQuantity(quantity - 1);
+      const updatedCartProducts = cartProducts.map((product) => {
+        if (product.id === id) {
+          return { ...product, quantity: product.quantity - 1 };
+        }
+        return product;
+      });
+
+      handleDelete(id);
+      setCartProducts(updatedCartProducts);
     }
   };
 
@@ -33,7 +45,7 @@ const OrderCard = ({ product, handleDelete }) => {
           />
         </figure>
         <div className="flex-grow w-[80px] flex flex-col items-end pr-3">
-          <p className="text-lg font-medium text-end">{calculatedPrice}</p>
+          <p className="text-lg font-medium text-end">{price * quantity}</p>
           <p className="text-sm font-light text-end">{title}</p>
         </div>
       </div>
@@ -45,7 +57,7 @@ const OrderCard = ({ product, handleDelete }) => {
         <span className="bg-slate-200 rounded-md">{quantity}</span>
         <PlusIcon
           className="h-4 w-4 text-black cursor-pointer"
-          onClick={() => addItem()}
+          onClick={() => addItem(id)}
         ></PlusIcon>
       </div>
     </div>
