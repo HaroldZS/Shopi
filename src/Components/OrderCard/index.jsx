@@ -51,16 +51,20 @@ const OrderCard = ({ product, handleDelete }) => {
           <p className="text-sm font-light text-end">{title}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <MinusIcon
-          className="h-4 w-4 text-black cursor-pointer"
-          onClick={() => removeItem(id)}
-        ></MinusIcon>
+      <div className={`flex items-center gap-2 ${!handleDelete ? "pl-5" : ""}`}>
+        {handleDelete && (
+          <MinusIcon
+            className="h-4 w-4 text-black cursor-pointer"
+            onClick={() => removeItem(id)}
+          ></MinusIcon>
+        )}
         <span className="bg-slate-200 rounded-md">{quantity}</span>
-        <PlusIcon
-          className="h-4 w-4 text-black cursor-pointer"
-          onClick={() => addItem(id)}
-        ></PlusIcon>
+        {handleDelete && (
+          <PlusIcon
+            className="h-4 w-4 text-black cursor-pointer"
+            onClick={() => addItem(id)}
+          ></PlusIcon>
+        )}
       </div>
     </div>
   );
