@@ -4,7 +4,8 @@ import { ShopiCartContext } from "../../Context";
 
 const OrderCard = ({ product, handleDelete }) => {
   const { id, title, images, price, quantity } = product;
-  const { cartProducts, setCartProducts } = useContext(ShopiCartContext);
+  const { cartProducts, setCartProducts, count, setCount } =
+    useContext(ShopiCartContext);
 
   const addItem = (id) => {
     const updatedCartProducts = cartProducts.map((product) => {
@@ -21,6 +22,7 @@ const OrderCard = ({ product, handleDelete }) => {
   const removeItem = (id) => {
     if (quantity === 1) {
       handleDelete(id);
+      setCount(count - 1);
     } else {
       const updatedCartProducts = cartProducts.map((product) => {
         if (product.id === id) {
