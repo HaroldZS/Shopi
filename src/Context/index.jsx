@@ -15,6 +15,8 @@ export const ShopiCartProvider = ({ children }) => {
   const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
+  const [order, setOrder] = useState([]);
+
   return (
     <ShopiCartContext.Provider
       value={{
@@ -31,6 +33,8 @@ export const ShopiCartProvider = ({ children }) => {
         setIsCheckoutSideMenuOpen,
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
+        order,
+        setOrder,
       }}
     >
       {children}

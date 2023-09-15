@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
 import { ShopiCartContext } from "../../Context";
-import { totalPrice } from "../../utils";
+import { totalPrice, currentDate } from "../../utils";
 import OrderCard from "../OrderCard";
 
 const CheckOutSideMenu = () => {
@@ -10,11 +10,27 @@ const CheckOutSideMenu = () => {
     closeCheckoutSideMenu,
     cartProducts,
     setCartProducts,
+    order,
+    setOrder,
+    setCount,
   } = useContext(ShopiCartContext);
 
   const handleDelete = (id) => {
     const filteredProducts = cartProducts.filter((product) => product.id != id);
     setCartProducts(filteredProducts);
+  };
+
+  const handleCheckout = () => {
+    const orderToAdd = {
+      date: currentDate(),
+      products: cartProducts,
+      totalProducts: cartProducts.length,
+      totalPrice: totalPrice(cartProducts),
+    };
+
+    setOrder([...order, orderToAdd]);
+    setCartProducts([]);
+    setCount(0);
   };
 
   return (
@@ -32,7 +48,7 @@ const CheckOutSideMenu = () => {
           ></XMarkIcon>
         </div>
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {cartProducts.map((product) => (
           <OrderCard
             key={product.id}
@@ -41,11 +57,19 @@ const CheckOutSideMenu = () => {
           />
         ))}
       </div>
-      <div className="px-6">
-        <p className="flex justify-between items-center">
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center mb-2">
           <span className="font-light">Total:</span>
-          <span className="font-medium text-2xl">${totalPrice(cartProducts)}</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(cartProducts)}
+          </span>
         </p>
+        <button
+          className="w-full bg-black text-white py-3 rounded-lg"
+          onClick={() => handleCheckout()}
+        >
+          Checkout
+        </button>
       </div>
     </aside>
   );
