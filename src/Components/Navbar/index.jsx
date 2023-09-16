@@ -4,9 +4,15 @@ import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import { ShopiCartContext } from "../../Context";
 
 const Navbar = () => {
-  const { count, setSearchByCategory } = useContext(ShopiCartContext);
+  const { count, setSearchByCategory, setSignOut } =
+    useContext(ShopiCartContext);
   const activeStyle = "underline underline-offset-4";
   const activeLink = ({ isActive }) => (isActive ? activeStyle : undefined);
+
+  const handleSignOut = () => {
+    localStorage.setItem("sign-out", JSON.stringify(true));
+    setSignOut(true);
+  };
 
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white">
@@ -83,8 +89,12 @@ const Navbar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/sign-in" className={activeLink}>
-            Sign In
+          <NavLink
+            to="/sign-in"
+            className={activeLink}
+            onClick={() => handleSignOut()}
+          >
+            Sign out
           </NavLink>
         </li>
         <li className="flex items-center">

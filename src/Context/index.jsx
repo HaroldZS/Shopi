@@ -1,5 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 
+const initializeItem = (key, defaultValue) => {
+  let item = localStorage.getItem(key);
+  if (!item) {
+    item = JSON.stringify(defaultValue);
+    localStorage.setItem(key, item);
+  }
+  return JSON.parse(item);
+};
+
+export const initializeLocalStorage = () => {
+  const parsedAccount = initializeItem("account", {});
+  const parsedSignOut = initializeItem("sign-out", false);
+};
+
 export const ShopiCartContext = createContext();
 
 export const ShopiCartProvider = ({ children }) => {
@@ -20,6 +34,10 @@ export const ShopiCartProvider = ({ children }) => {
   const [searchByTitle, setSearchByTitle] = useState(null);
   const [searchByCategory, setSearchByCategory] = useState(null);
   const [filteredItems, setFilteredItems] = useState(null);
+  const [account, setAccount] = useState({});
+  const [signOut, setSignOut] = useState(false);
+
+  console.log(signOut);
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
@@ -103,6 +121,10 @@ export const ShopiCartProvider = ({ children }) => {
         filteredItems,
         searchByCategory,
         setSearchByCategory,
+        account,
+        setAccount,
+        signOut,
+        setSignOut,
       }}
     >
       {children}
