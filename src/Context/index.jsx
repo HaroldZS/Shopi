@@ -19,6 +19,8 @@ export const ShopiCartProvider = ({ children }) => {
 
   const [items, setItems] = useState(null);
 
+  const [searchByTitle, setSearchByTitle] = useState(null);
+
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.json())
@@ -45,6 +47,8 @@ export const ShopiCartProvider = ({ children }) => {
         setOrder,
         items,
         setItems,
+        searchByTitle,
+        setSearchByTitle,
       }}
     >
       {children}

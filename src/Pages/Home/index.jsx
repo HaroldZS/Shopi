@@ -5,11 +5,19 @@ import ProductDetail from "../../Components/productDetail";
 import { ShopiCartContext } from "../../Context";
 
 function Home() {
-  const { items } = useContext(ShopiCartContext);
+  const { items, setSearchByTitle } = useContext(ShopiCartContext);
 
   return (
     <Layout>
-      Home!
+      <div className="flex w-80 items-center justify-center relative mb-4">
+        <h1 className="font-medium text-xl">Exlusive Products</h1>
+      </div>
+      <input
+        type="text"
+        placeholder="Search a Product"
+        className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+        onChange={(event) => setSearchByTitle(event.target.value)}
+      />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
         {items?.map((item) => (
           <Card key={item.id} data={item} />
