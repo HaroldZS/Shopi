@@ -14,6 +14,7 @@ const CheckOutSideMenu = () => {
     order,
     setOrder,
     setCount,
+    setSearchByTitle,
   } = useContext(ShopiCartContext);
 
   const handleDelete = (id) => {
@@ -32,6 +33,7 @@ const CheckOutSideMenu = () => {
     setOrder([...order, orderToAdd]);
     setCartProducts([]);
     setCount(0);
+    setSearchByTitle(null);
   };
 
   return (
