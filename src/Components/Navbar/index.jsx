@@ -4,7 +4,7 @@ import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import { ShopiCartContext } from "../../Context";
 
 const Navbar = () => {
-  const context = useContext(ShopiCartContext);
+  const { count, setSearchByCategory } = useContext(ShopiCartContext);
   const activeStyle = "underline underline-offset-4";
   const activeLink = ({ isActive }) => (isActive ? activeStyle : undefined);
 
@@ -15,32 +15,56 @@ const Navbar = () => {
           <NavLink to="/">Shopi</NavLink>
         </li>
         <li>
-          <NavLink to="/" className={activeLink}>
+          <NavLink
+            to="/"
+            onClick={() => setSearchByCategory()}
+            className={activeLink}
+          >
             All
           </NavLink>
         </li>
         <li>
-          <NavLink to="/clothes" className={activeLink}>
+          <NavLink
+            to="/clothes"
+            onClick={() => setSearchByCategory("clothes")}
+            className={activeLink}
+          >
             Clothes
           </NavLink>
         </li>
         <li>
-          <NavLink to="/electronics" className={activeLink}>
+          <NavLink
+            to="/electronics"
+            onClick={() => setSearchByCategory("electronics")}
+            className={activeLink}
+          >
             Electronics
           </NavLink>
         </li>
         <li>
-          <NavLink to="/furnitures" className={activeLink}>
+          <NavLink
+            to="/furnitures"
+            onClick={() => setSearchByCategory("furniture")}
+            className={activeLink}
+          >
             Furnitures
           </NavLink>
         </li>
         <li>
-          <NavLink to="/toys" className={activeLink}>
+          <NavLink
+            to="/toys"
+            onClick={() => setSearchByCategory("toys")}
+            className={activeLink}
+          >
             Toys
           </NavLink>
         </li>
         <li>
-          <NavLink to="/other" className={activeLink}>
+          <NavLink
+            to="/other"
+            onClick={() => setSearchByCategory("others")}
+            className={activeLink}
+          >
             Others
           </NavLink>
         </li>
@@ -65,7 +89,7 @@ const Navbar = () => {
         </li>
         <li className="flex items-center">
           <ShoppingBagIcon className="h-6 w-6 text-black"></ShoppingBagIcon>
-          <div>{context.count}</div>
+          <div>{count}</div>
         </li>
       </ul>
     </nav>
