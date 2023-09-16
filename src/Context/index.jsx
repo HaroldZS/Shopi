@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ShopiCartContext = createContext();
 
@@ -16,6 +16,14 @@ export const ShopiCartProvider = ({ children }) => {
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
   const [order, setOrder] = useState([]);
+
+  const [items, setItems] = useState(null);
+
+  useEffect(() => {
+    fetch("https://api.escuelajs.co/api/v1/products")
+      .then((res) => res.json())
+      .then((data) => setItems(data));
+  }, []);
 
   return (
     <ShopiCartContext.Provider
@@ -35,6 +43,8 @@ export const ShopiCartProvider = ({ children }) => {
         closeCheckoutSideMenu,
         order,
         setOrder,
+        items,
+        setItems,
       }}
     >
       {children}
