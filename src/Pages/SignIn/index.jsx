@@ -1,16 +1,40 @@
+import { Link } from "react-router-dom";
 import Layout from "../../Components/Layout";
 import { initializeLocalStorage } from "../../Context";
 
 function SignIn() {
   return (
     <Layout>
-      Sign In!
-      <button
-        onClick={() => initializeLocalStorage()}
-        className="w-80 h-10 bg-black text-white items-center rounded-lg"
-      >
-        Save
-      </button>
+      <h1 className="font-medium text-xl text-center mb-6 w-80">Welcome!</h1>
+      <div className="flex flex-col w-80">
+        <p>
+          <span className="font-ligth text-sm">Email: </span>
+          <span>haroldzs@gmail.com</span>
+        </p>
+        <p>
+          <span className="font-light text-sm">Password: </span>
+          <span>******</span>
+        </p>
+        <Link to="/">
+          <button className="bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2">
+            Log In
+          </button>
+        </Link>
+        <div className="text-center">
+          <a
+            className="font-light text-xs underline underline-offset-4"
+            href="/"
+          >
+            Forgot my password
+          </a>
+        </div>
+        <button
+          onClick={() => initializeLocalStorage()}
+          className="border border-black disabled:text-black/40 disabled:border-black/40 rounded-lg mt-6 py-3"
+        >
+          Sign Up
+        </button>
+      </div>
     </Layout>
   );
 }
