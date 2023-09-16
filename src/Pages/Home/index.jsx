@@ -5,7 +5,8 @@ import ProductDetail from "../../Components/productDetail";
 import { ShopiCartContext } from "../../Context";
 
 function Home() {
-  const { items, setSearchByTitle } = useContext(ShopiCartContext);
+  const { items, setSearchByTitle, filteredItems } =
+    useContext(ShopiCartContext);
 
   return (
     <Layout>
@@ -19,10 +20,11 @@ function Home() {
         onChange={(event) => setSearchByTitle(event.target.value)}
       />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {items?.map((item) => (
-          <Card key={item.id} data={item} />
-        ))}
+        {filteredItems
+          ? filteredItems.map((item) => <Card key={item.id} data={item} />)
+          : items?.map((item) => <Card key={item.id} data={item} />)}
       </div>
+      {filteredItems?.length === 0 && <div>We haven't found any matches </div>}
       <ProductDetail />
     </Layout>
   );
