@@ -4,18 +4,29 @@ import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import { ShopiCartContext } from "../../Context";
 
 const Navbar = () => {
-  const { count, setSearchByCategory, signOut, setSignOut } =
+  const { count, setSearchByCategory, signOut, setSignOut, account } =
     useContext(ShopiCartContext);
   const activeStyle = "underline underline-offset-4";
   const activeLink = ({ isActive }) => (isActive ? activeStyle : undefined);
+
+  const parsedSignOut = JSON.parse(localStorage.getItem("sign-out"));
+  const isUserSignOut = signOut || parsedSignOut;
+
+  const localStorageAccount = localStorage.getItem("account");
+  const parsedAccount = JSON.parse(localStorageAccount);
+
+  const noAccountInLocalStorage = parsedAccount
+    ? Object.keys(parsedAccount).length === 0
+    : true;
+  const noAccountInLocalState = account
+    ? Object.keys(account).length === 0
+    : true;
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
 
   const handleSignOut = () => {
     localStorage.setItem("sign-out", JSON.stringify(true));
     setSignOut(true);
   };
-
-  const parsedSignOut = JSON.parse(localStorage.getItem("sign-out"));
-  const isUserSignOut = signOut || parsedSignOut;
 
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white">
@@ -80,17 +91,7 @@ const Navbar = () => {
       </ul>
 
       <ul className="flex items-center gap-3">
-        {isUserSignOut ? (
-          <li>
-            <NavLink
-              to="/sign-in"
-              className={activeLink}
-              onClick={() => handleSignOut()}
-            >
-              Sign in
-            </NavLink>
-          </li>
-        ) : (
+        {hasUserAnAccount && !isUserSignOut ? (
           <>
             <li className="text-black/60">haroldzs@gmail.com</li>
             <li>
@@ -117,6 +118,16 @@ const Navbar = () => {
               <div>{count}</div>
             </li>
           </>
+        ) : (
+          <li>
+            <NavLink
+              to="/sign-in"
+              className={activeLink}
+              onClick={() => handleSignOut()}
+            >
+              Sign in
+            </NavLink>
+          </li>
         )}
       </ul>
     </nav>

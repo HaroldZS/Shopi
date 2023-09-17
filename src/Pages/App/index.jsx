@@ -1,5 +1,10 @@
-import { useRoutes, BrowserRouter } from "react-router-dom";
-import { ShopiCartProvider } from "../../Context";
+import { useContext } from "react";
+import { useRoutes, BrowserRouter, Navigate } from "react-router-dom";
+import {
+  ShopiCartProvider,
+  initializeLocalStorage,
+  ShopiCartContext,
+} from "../../Context";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
 import MyOrder from "../MyOrder";
@@ -11,14 +16,40 @@ import CheckOutSideMenu from "../../Components/CheckoutSideMenu";
 import "./App.css";
 
 const AppRoutes = () => {
+  const { signOut, account } = useContext(ShopiCartContext);
+
+  const parsedSignOut = JSON.parse(localStorage.getItem("sign-out"));
+  const isUserSignOut = signOut || parsedSignOut;
+
+  const localStorageAccount = localStorage.getItem("account");
+  const parsedAccount = JSON.parse(localStorageAccount);
+
+  const noAccountInLocalStorage = parsedAccount
+    ? Object.keys(parsedAccount).length === 0
+    : true;
+  const noAccountInLocalState = account
+    ? Object.keys(account).length === 0
+    : true;
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
+
   const routes = useRoutes([
     {
       path: "/",
-      element: <Home />,
+      element:
+        hasUserAnAccount && !isUserSignOut ? (
+          <Home />
+        ) : (
+          <Navigate replace to={"/sign-in"} />
+        ),
     },
     {
       path: "/:category",
-      element: <Home />,
+      element:
+        hasUserAnAccount && !isUserSignOut ? (
+          <Home />
+        ) : (
+          <Navigate replace to={"/sign-in"} />
+        ),
     },
     {
       path: "/my-account",
@@ -53,6 +84,8 @@ const AppRoutes = () => {
 };
 
 const App = () => {
+  initializeLocalStorage();
+
   return (
     <ShopiCartProvider>
       <BrowserRouter>
