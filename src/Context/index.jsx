@@ -37,8 +37,6 @@ export const ShopiCartProvider = ({ children }) => {
   const [account, setAccount] = useState({});
   const [signOut, setSignOut] = useState(false);
 
-  console.log(signOut);
-
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.json())
